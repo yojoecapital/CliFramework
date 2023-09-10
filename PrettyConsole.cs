@@ -107,19 +107,15 @@ namespace CliFramework
                     int count = 0;
                     if (!string.IsNullOrEmpty(header))
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(header);
-                        Console.ResetColor();
+                        PrintColor(header, ConsoleColor.Green);
                     }
                     foreach (var searchResult in currentPageResults)
                     {
                         Console.WriteLine(searchResult);
                         count++;
                     }
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(currentPage * resultsPerPage + count + " / " + total + " result(s)." +
-                            "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.");
-                    Console.ResetColor();
+                    PrintColor(currentPage * resultsPerPage + count + " / " + total + " result(s)." +
+                            "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.", ConsoleColor.Green);
                     while (true)
                     {
                         var keyInfo = Console.ReadKey();
@@ -162,6 +158,13 @@ namespace CliFramework
         {
             var strings = keyValues.Select(keyValue => (keyValue.Key.OneLine() + " " + token + " " + keyValue.Value.OneLine()).Bullet());
             PrintPagedList(strings, resultsPerPage, header);
+        }
+
+        public static void PrintColor(object x, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(x);
+            Console.ResetColor();
         }
     }
 }

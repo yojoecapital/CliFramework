@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Xml.Linq;
 
 namespace CliFramework
 {
@@ -22,6 +23,19 @@ namespace CliFramework
         protected static Dictionary<string, string> GetDictionary(string filePath) =>
             GetDictionary<string>(filePath);
 
+        protected static Dictionary<string, string> GetDictionaryXml(string filePath)
+        {
+            try
+            {
+                return XDocument.Load(filePath).Root.Elements()
+                    .ToDictionary(x => x.Attribute("key").Value, x => x.Attribute("value").Value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         protected static Dictionary<string, TValue> GetDictionary<TValue>(string filePath) =>
             GetDictionary<string, TValue>(filePath);
 
@@ -38,6 +52,18 @@ namespace CliFramework
             catch
             {
                 return default;
+            }
+        }
+
+        protected static IEnumerable<T> GetObjectXml<T>(string filePath) where T : new()
+        {
+            try
+            {
+                return XDocument.Load(filePath).Root.Elements().Select(element => SerializationHelper.SerializeXElement<T>(element));
+            }
+            catch
+            {
+                return null;
             }
         }
 
