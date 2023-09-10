@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
+﻿using System.CodeDom.Compiler;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CliFramework
 {
@@ -19,20 +17,7 @@ namespace CliFramework
             else return text;
         }
 
-        public static string Bullet(this string text)
-        {
-            var lines = text.Split('\n');
-            StringBuilder formatted = new();
-            formatted.Append(" \u2022 " + lines[0].TrimEnd());
-            string indentation = "   ";
-            for (int i = 1; i < lines.Length; i++)
-            {
-                var line = lines[i].TrimEnd();
-                formatted.AppendLine();
-                formatted.Append(indentation + line);
-            }
-            return formatted.ToString();
-        }
+        public static string Bullet(this string text, char bullet = '\u2022') => Indent(" " + bullet + " ", text);
 
         public static string FormatKeyValue(KeyValuePair<string, string> keyValue, char token = '\u2192') =>
             FormatKeyValue(keyValue.Key, keyValue.Value, token);

@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
 namespace CliFramework
 {
@@ -43,12 +41,12 @@ namespace CliFramework
             }
         }
 
-        protected static void SetDictionary<TKey, TValue>(string filePath, Dictionary<TKey, TValue> dictionary)
+        protected static void SetDictionary<TKey, TValue>(string filePath, Dictionary<TKey, TValue> dictionary, Formatting formatting = Formatting.None)
             => SetObject(filePath, dictionary);
 
-        protected static void SetObject<T>(string filePath, T value)
+        protected static void SetObject<T>(string filePath, T value, Formatting formatting = Formatting.None)
         {
-            string json = JsonConvert.SerializeObject(value);
+            string json = JsonConvert.SerializeObject(value, formatting);
             File.WriteAllText(filePath, json);
         }
 

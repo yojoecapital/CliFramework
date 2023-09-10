@@ -110,16 +110,24 @@ namespace CliFramework
             return true;
         }
 
-        public void Run()
+        public void Run() => Run(null);
+
+        public void Run(string[] args, bool doNotLoop = false)
         {
-            string[] args;
-            do
+            if (args != null && args.Length > 0)
             {
-                Console.Write("> ");
-                string input = Console.ReadLine().Trim();
-                args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (Process(args) || doNotLoop) return;
             }
-            while (Process(args));
+            else
+            {
+                do
+                {
+                    Console.Write("> ");
+                    string input = Console.ReadLine().Trim();
+                    args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+                while (Process(args));
+            }
         }
     }
 
