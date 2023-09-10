@@ -44,6 +44,18 @@ static void Main(string[] args)
 }
 ```
 
+Running the application:
+
+```
+> help
+ • quit (q)              Exit the program.
+ • clear (cls)           Clear the console screen.
+ • help (h)              Display this message.
+ • hello [your-name]     Prints out a friendly greeting using your name.
+> hello World
+Hello world!
+```
+
 ## Contact
 
 For any inquiries or feedback, contact me at [yousefsuleiman10@gmail.com](mailto:yousefsuleiman10@gmail.com).
