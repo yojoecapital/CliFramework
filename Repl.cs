@@ -64,16 +64,16 @@ namespace CliFramework
         public void AddCommand(Func<string[], bool> predicate, Action<string[]> action, string parameterDescription, string actionDescription)
         {
             AddCommand(predicate, (args) =>
-                {
-                    action(args);
-                    return true;
-                }, parameterDescription, actionDescription);
+            {
+                action(args);
+                return true;
+            }, parameterDescription, actionDescription);
         }
 
         public void AddCommand(Func<string[], bool> predicate, Func<string[], bool> func, string parameterDescription, string actionDescription)
         {
             AddCommand(predicate, func);
-            commandDescriptions.Add((parameterDescription, actionDescription));
+            AddDescription(parameterDescription, actionDescription);
         }
 
         public void AddCommand(Func<string[], bool> predicate, Action<string[]> action)
@@ -88,6 +88,11 @@ namespace CliFramework
         public void AddCommand(Func<string[], bool> predicate, Func<string[], bool> func)
         {
             commandAssociations.Add((predicate, func));
+        }
+
+        public void AddDescription(string parameterDescription, string actionDescriptionc)
+        {
+            commandDescriptions.Add((parameterDescription, actionDescriptionc));
         }
 
         private void PreprocessArgs(string[] args) 

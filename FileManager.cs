@@ -55,6 +55,18 @@ namespace CliFramework
             }
         }
 
+        protected static IEnumerable<T> GetObjectXml<T>(string filePath) where T : new()
+        {
+            try
+            {
+                return XDocument.Load(filePath).Root.Elements().Select(element => SerializationHelper.SerializeXElement<T>(element));
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         protected static void SetDictionary<TKey, TValue>(string filePath, Dictionary<TKey, TValue> dictionary, Formatting formatting = Formatting.None)
             => SetObject(filePath, dictionary);
 
