@@ -74,7 +74,7 @@ namespace CliFramework
             return dp[s1.Length, s2.Length];
         }
 
-        public static IEnumerable<KeyValuePair<string, string>> SortDictionaryByKeyText(Dictionary<string, string> dictionary, string text) =>
+        public static IEnumerable<KeyValuePair<string, T>> SortDictionaryByKeyText<T>(Dictionary<string, T> dictionary, string text) =>
             dictionary.OrderByDescending(item => LongestCommonSubsequence(item.Key, text));
 
         public static IEnumerable<KeyValuePair<string, string>> SortDictionaryByValueText(Dictionary<string, string> dictionary, string text) =>

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CliFramework
 {
@@ -128,8 +129,10 @@ namespace CliFramework
                     Console.WriteLine(searchResult);
                     count++;
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(currentPage * resultsPerPage + count + " / " + total + " result(s)." +
-                    "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.");
+                        "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.");
+                Console.ResetColor();
                 while (true)
                 {
                     var keyInfo = Console.ReadKey();

@@ -16,6 +16,7 @@ namespace CliFramework
 
         public Func<string, string> preprocessArg = arg => arg.ToLower();
         public Action onQuit = () => { };
+        public int pagifyHelp = 10;
 
         private void Initialize()
         {
@@ -38,7 +39,11 @@ namespace CliFramework
             );
             AddCommand(
                 args => args.Length == 1 && (args[0].Equals("help") || args[0].Equals("h")),
-                _ => PrettyConsole.PrintList(commandDescriptions),
+                _ =>
+                {
+                    if (commandDescriptions.Count > pagifyHelp) PrettyConsole.PrintPagedList(commandDescriptions, pagifyHelp);
+                    else PrettyConsole.PrintList(commandDescriptions);
+                },
                 "help (h)",
                 "Display this message."
             );
@@ -100,7 +105,7 @@ namespace CliFramework
                     if (predicate(args))
                         return func(args);
                 }
-                PrettyConsole.PrintList(commandDescriptions);
+                PrettyConsole.PrintError("Invalid command.");
             }
             return true;
         }
