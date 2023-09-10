@@ -113,40 +113,43 @@ namespace CliFramework
         public static void PrintPagedList(IEnumerable<string> strings, int resultsPerPage, string header = null)
         {
             int currentPage = 0, total = strings.Count();
-            while (true)
+            if (total > 0)
             {
-                Console.Clear();
-                var currentPageResults = strings.Skip(currentPage * resultsPerPage).Take(resultsPerPage);
-                int count = 0;
-                if (!string.IsNullOrEmpty(header))
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(header);
-                    Console.ResetColor();
-                }
-                foreach (var searchResult in currentPageResults)
-                {
-                    Console.WriteLine(searchResult);
-                    count++;
-                }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(currentPage * resultsPerPage + count + " / " + total + " result(s)." +
-                        "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.");
-                Console.ResetColor();
                 while (true)
                 {
-                    var keyInfo = Console.ReadKey();
-                    if (keyInfo.Key == ConsoleKey.Enter)
-                        return;
-                    else if (keyInfo.Key == ConsoleKey.RightArrow)
+                    Console.Clear();
+                    var currentPageResults = strings.Skip(currentPage * resultsPerPage).Take(resultsPerPage);
+                    int count = 0;
+                    if (!string.IsNullOrEmpty(header))
                     {
-                        if ((currentPage + 1) * resultsPerPage < total) currentPage++;
-                        break;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(header);
+                        Console.ResetColor();
                     }
-                    else if (keyInfo.Key == ConsoleKey.LeftArrow)
+                    foreach (var searchResult in currentPageResults)
                     {
-                        if (currentPage > 0) currentPage--;
-                        break;
+                        Console.WriteLine(searchResult);
+                        count++;
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(currentPage * resultsPerPage + count + " / " + total + " result(s)." +
+                            "\nUse the arrow keys to display the next " + resultsPerPage + " results or Enter to stop.");
+                    Console.ResetColor();
+                    while (true)
+                    {
+                        var keyInfo = Console.ReadKey();
+                        if (keyInfo.Key == ConsoleKey.Enter)
+                            return;
+                        else if (keyInfo.Key == ConsoleKey.RightArrow)
+                        {
+                            if ((currentPage + 1) * resultsPerPage < total) currentPage++;
+                            break;
+                        }
+                        else if (keyInfo.Key == ConsoleKey.LeftArrow)
+                        {
+                            if (currentPage > 0) currentPage--;
+                            break;
+                        }
                     }
                 }
             }
