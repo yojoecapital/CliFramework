@@ -134,6 +134,7 @@ namespace CliFramework
                     }
                 }
             }
+            else PrintColor(header, ConsoleColor.Green);
         }
 
         public static void PrintPagedList(IEnumerable<(string, string)> pairs, int resultsPerPage, string header = null)
