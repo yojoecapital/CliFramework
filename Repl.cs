@@ -16,7 +16,7 @@ namespace CliFramework
 
         public Func<string, string> preprocessArg = arg => arg.ToLower();
         public Action onQuit = () => { };
-        public int pagifyHelp = 10;
+        public int pagifyHelp = 15;
 
         private void Initialize()
         {
