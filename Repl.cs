@@ -121,7 +121,7 @@ namespace CliFramework
         {
             if (args != null && args.Length > 0)
             {
-                if (Process(args) && doNotLoop)
+                if (Process(args) || doNotLoop)
                 {
                     onQuit();
                     return;
