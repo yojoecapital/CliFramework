@@ -82,16 +82,33 @@ namespace CliFramework
                 Console.WriteLine(s);
         }
 
+        public static void PrintList(IEnumerable<string> strings, int resultsPerPage, string header = null)
+        {
+            PrintPagedList(strings, resultsPerPage, header);
+        }
+
         public static void PrintList(IEnumerable<(string, string)> pairs)
         {
             var strings = FormatPairs(pairs).Select(line => line.Bullet());
             PrintList(strings);
+        }
+        
+        public static void PrintList(IEnumerable<(string, string)> pairs, int resultsPerPage, string header = null)
+        {
+            var strings = FormatPairs(pairs).Select(line => line.Bullet());
+            PrintPagedList(strings, resultsPerPage, header);
         }
 
         public static void PrintList(IEnumerable<KeyValuePair<string, string>> keyValues)
         {
             var strings = keyValues.Select(keyValues => FormatKeyValue(keyValues).Bullet());
             PrintList(strings);
+        }
+        
+        public static void PrintList(IEnumerable<KeyValuePair<string, string>> keyValues, int resultsPerPage, string header = null)
+        {
+            var strings = keyValues.Select(keyValues => FormatKeyValue(keyValues).Bullet());
+            PrintPagedList(strings, resultsPerPage, header);
         }
 
 
