@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CliFramework
 {
@@ -17,6 +18,12 @@ namespace CliFramework
         public Func<string, string> preprocessArg = arg => arg.ToLower();
         public Action onQuit = () => { };
         public int pagifyHelp = 15;
+
+        public Func<string, string[]> split = input =>
+        {
+            var matches = Regex.Matches(input, @"[\""].+?[\""]|'.+?'|\S+");
+            return matches.Select(match => match.Value.Trim().Trim('\'', '"')).ToArray();
+        };
 
         private void Initialize()
         {
@@ -131,7 +138,7 @@ namespace CliFramework
             {
                 Console.Write("> ");
                 string input = Console.ReadLine().Trim();
-                args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                args = split(input);
             }
             while (Process(args));
         }
