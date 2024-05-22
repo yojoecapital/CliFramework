@@ -35,7 +35,7 @@ namespace CliFramework
                     onQuit();
                     return false;
                 },
-                "quit (q)",
+                "quit (q) (exit)",
                 "Exit the program."
             );
             AddCommand(
