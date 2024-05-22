@@ -18,7 +18,7 @@ To use the CliFramework project library in your solution, follow these steps:
 1. Navigate to your solution directory: `cd <your_solution_path>`
 2. Add a reference to the project to your solution.
    - You can add the submodule to your own repository using `git submodule add https://github.com/yojoecapital/CliFramework CliFramework`
-   - Commit the changes with `git commit -m "Add CliFramework as submodule`
+   - Commit the changes with `git commit -m "Add CliFramework as submodule"`
 
 ## Usage
 

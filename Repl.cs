@@ -25,12 +25,12 @@ namespace CliFramework
             return matches.Select(match => match.Value.Trim().Trim('\'', '"')).ToArray();
         };
 
-        private void Initialize()
+        private void Initialize(Encoding encoding)
         {
-            Console.OutputEncoding = Encoding.Unicode;
-            Console.InputEncoding = Encoding.Unicode;
+            Console.OutputEncoding = encoding;
+            Console.InputEncoding = encoding;
             AddCommand(
-                args => args.Length == 1 && (args[0].Equals("quit") || args[0].Equals("q")),
+                args => args.Length == 1 && (args[0].Equals("quit") || args[0].Equals("q") || args[0].Equals("exit")),
                 _ => {
                     onQuit();
                     return false;
@@ -56,7 +56,7 @@ namespace CliFramework
             );
         }
 
-        public Repl()
+        public Repl() 
         {
             commandAssociations = new List<(
                 Func<string[], bool> predicate,
@@ -64,7 +64,18 @@ namespace CliFramework
             commandDescriptions = new List<(
                 string parameterDescription,
                 string actionDescription)>();
-            Initialize();
+            Initialize(Encoding.Unicode);
+        }
+
+        public Repl(Encoding encoding)
+        {
+            commandAssociations = new List<(
+                Func<string[], bool> predicate,
+                Func<string[], bool> func)>();
+            commandDescriptions = new List<(
+                string parameterDescription,
+                string actionDescription)>();
+            Initialize(encoding);
         }
 
 
