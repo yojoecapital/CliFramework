@@ -56,16 +56,7 @@ namespace CliFramework
             );
         }
 
-        public Repl() 
-        {
-            commandAssociations = new List<(
-                Func<string[], bool> predicate,
-                Func<string[], bool> func)>();
-            commandDescriptions = new List<(
-                string parameterDescription,
-                string actionDescription)>();
-            Initialize(Encoding.Unicode);
-        }
+        public Repl(): this(Encoding.Default) { }
 
         public Repl(Encoding encoding)
         {
