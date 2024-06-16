@@ -9,7 +9,7 @@
 - Define command associations with predicates and actions.
 - Add descriptions for each command to provide context to users.
 - Customize preprocessing of command arguments.
-- Default commands for "quit," "clear," and "help."
+- Default commands for "quit," "clear," and "help".
 
 ## Installation
 

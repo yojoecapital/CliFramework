@@ -14,9 +14,11 @@ namespace CliFramework
             string parameterDescription,
             string actionDescription
         )> commandDescriptions;
-
+        public string invalidCommandMessage = "Invalid command.";
         public Func<string, string> preprocessArg = arg => arg.ToLower();
-        public Action onQuit = () => { };
+        public Action onQuit = () => {};
+        public Action onClear = () => Console.Clear();
+        public Action<string[], List<(string parameterDescription, string actionDescription)>> onHelp;
         public int pagifyHelp = 15;
 
         public Func<string, string[]> split = input =>
@@ -29,7 +31,7 @@ namespace CliFramework
         {
             AddCommand(
                 args => args.Length == 1 && (args[0].Equals("quit") || args[0].Equals("q") || args[0].Equals("exit")),
-                _ => {
+                args => {
                     onQuit();
                     return false;
                 },
@@ -38,17 +40,13 @@ namespace CliFramework
             );
             AddCommand(
                 args => args.Length == 1 && (args[0].Equals("clear") || args[0].Equals("cls")),
-                _ => Console.Clear(),
+                args => onClear(),
                 "clear (cls)",
                 "Clear the console screen."
             );
             AddCommand(
-                args => args.Length == 1 && (args[0].Equals("help") || args[0].Equals("h")),
-                _ =>
-                {
-                    if (commandDescriptions.Count > pagifyHelp) PrettyConsole.PrintPagedList(commandDescriptions, pagifyHelp);
-                    else PrettyConsole.PrintList(commandDescriptions);
-                },
+                args => args.Length >= 1 && (args[0].Equals("help") || args[0].Equals("h")),
+                args => onHelp(args, commandDescriptions),
                 "help (h)",
                 "Display this message."
             );
@@ -64,6 +62,16 @@ namespace CliFramework
             commandDescriptions = new List<(
                 string parameterDescription,
                 string actionDescription)>();
+            onHelp = (args, commandDescriptions) => {
+                var descriptions = commandDescriptions as IEnumerable<(string, string)>;
+                if (args.Length > 1)
+                {
+                    var filter = string.Join(' ', args.Skip(1));
+                    descriptions = descriptions.Where(pair => pair.Item1.Contains(filter));
+                }
+                if (descriptions.Count() > pagifyHelp) PrettyConsole.PrintPagedList(descriptions, pagifyHelp);
+                else PrettyConsole.PrintList(descriptions);
+            };
             Initialize();
         }
 
@@ -117,7 +125,7 @@ namespace CliFramework
                     if (predicate(args))
                         return func(args);
                 }
-                PrettyConsole.PrintError("Invalid command.");
+                PrettyConsole.PrintError(invalidCommandMessage);
             }
             return true;
         }
